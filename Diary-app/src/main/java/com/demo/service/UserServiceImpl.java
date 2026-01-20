@@ -16,8 +16,38 @@ public class UserServiceImpl implements UserService{
 	
 	@Override
 	public List<User> findAll() {
-		// TODO Auto-generated method stub
+		
 		return ud.findAll();
+	}
+
+	@Override
+	public List<User> findByEmail(String email) {
+		
+		return ud.findByEmail(email);
+	}
+
+	@Override
+	public List<User> findById(int id) {
+		
+		return ud.findById(id);
+	}
+
+	@Override
+	public List<User> findByName(String name) {
+		
+		return ud.findByName(name);
+	}
+
+	@Override
+	public User saveUser(User user) {
+		
+		return ud.saveUser(user);
+	}
+
+	@Override
+	public boolean exitsByEmail(String email) {
+		
+		return ud.exitsByEmail(email);
 	}
 
 }
