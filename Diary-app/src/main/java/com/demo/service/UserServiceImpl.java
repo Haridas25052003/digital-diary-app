@@ -41,13 +41,13 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public User saveUser(User user) {
 		
-		return ud.saveUser(user);
+		return ud.save(user);
 	}
 
 	@Override
-	public boolean exitsByEmail(String email) {
+	public boolean existsByEmail(String email) {
 		
-		return ud.exitsByEmail(email);
+		return ud.existsByEmail(email);
 	}
 
 }

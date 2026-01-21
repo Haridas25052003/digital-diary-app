@@ -18,8 +18,8 @@ public interface UserDao extends JpaRepository<User,Integer>{
 	
 	List<User> findByName(String name);
 
-	User saveUser(User user);
+	//User saveUser(User user);
 	
-	boolean exitsByEmail(String email);
+	boolean existsByEmail(String email);
 	
 }
