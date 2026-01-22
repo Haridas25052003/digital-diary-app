@@ -21,9 +21,9 @@ public class DiaryServiceImpl implements DiaryService{
 	}
 
 	@Override
-	public List<Diary> findDiariesByUserId(int userId) {
+	public List<Diary> findByUserId(int userId) {
 		
-		return dd.findDiariesByUserId(userId);
+		return dd.findByUserId(userId);
 	}
 
 	@Override
@@ -35,12 +35,12 @@ public class DiaryServiceImpl implements DiaryService{
 	@Override
 	public Diary saveDiary(Diary diary) {
 		
-		return dd.saveDiary(diary);
+		return dd.save(diary);
 	}
 
 	@Override
 	public void deleteDiary(int id) {
-		dd.deleteDiary(id);
+		dd.deleteById(id);
 		
 	}
 

@@ -10,7 +10,7 @@ public interface DiaryService {
 	
 	List<Diary> findAll();
 	
-	List<Diary> findDiariesByUserId(int userId);
+	List<Diary> findByUserId(int userId);
 	
 	List<Diary> findById(int id);
 	
