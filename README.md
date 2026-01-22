@@ -1,22 +1,27 @@
-📔 Digital Diary Application
+Digital Diary Application
 
-Digital Diary is a backend application built using Spring Boot that allows users to securely manage their personal diary entries. The application follows a layered architecture and provides RESTful APIs for user and diary management.
+Digital Diary is a simple full-stack application built using Spring Boot that allows users to manage personal diary entries.
+The project follows a layered architecture and exposes REST APIs which are consumed by a basic frontend built using HTML and JavaScript.
 
-🚀 Features (Current)
+Project Overview
 
-User registration and login
+The application provides functionality to:
+
+Manage users
 
 Create, view, and delete diary entries
 
-One-to-Many relationship between User and Diary
+Fetch diary entries through REST APIs
 
-Secure database mapping using JPA & Hibernate
+Display diary data on a simple frontend page
 
-Clean layered architecture (Controller, Service, DAO, Repository)
+This project is designed for learning Spring Boot, REST APIs, JPA, and frontend-backend integration.
 
-🛠️ Technology Stack
+Technology Stack
 
-Java 17
+Backend:
+
+Java
 
 Spring Boot
 
@@ -26,77 +31,86 @@ Hibernate
 
 MySQL
 
+//(in progress)
+Frontend:
+
+HTML
+
+JavaScript (Fetch API)
+
+Tools:
+
 Maven
 
-REST APIs
+Git & GitHub
 
-🧱 Project Architecture
-Controller → Service → DAO → Repository → Database
+Postman
 
-📁 Project Structure
-src/main/java
- └── com.demo.diaryapp
-     ├── controller
-     ├── service
-     ├── dao
-     ├── repository
-     ├── entity
-     └── dto
+Project Structure
+com.demo
+ ├── controller
+ │    ├── AuthController.java
+ │    └── DiaryController.java
+ ├── service
+ │    ├── UserService.java
+ │    ├── DiaryService.java
+ │    └── impl
+ │         ├── UserServiceImpl.java
+ │         └── DiaryServiceImpl.java
+ ├── dao
+ │    ├── UserDao.java
+ │    └── DiaryDao.java
+ ├── model
+ │    ├── User.java
+ │    └── Diary.java
+ └── DiaryAppApplication.java
 
-🗄️ Database Design
-User
+Application Flow
+Controller → Service → DAO → Database
 
-id
 
-name
+Controller handles HTTP requests
 
-email
+Service contains business logic
 
-password
+DAO interacts with the database using JPA
 
-active
+MySQL stores application data
 
-createdAt
+REST API Endpoints
+User APIs
 
-Diary
+GET /api/auth/all – Get all users
 
-id
+GET /api/auth/email/{email} – Get user by email
 
-title
+GET /api/auth/id/{id} – Get user by id
 
-content
+GET /api/auth/name/{name} – Get users by name
 
-category
+Diary APIs
 
-entryDate
+GET /api/diary/all – Get all diary entries
 
-createdAt
+GET /api/diary/dreq/{userId} – Get diaries by userId
 
-updatedAt
+GET /api/diary/dreq1/{id} – Get diary by diaryId
 
-user (Foreign Key)
+POST /api/diary/dreq2/save – Save diary
 
-🔗 API Endpoints (Initial)
-Authentication
-POST /api/auth/register
-POST /api/auth/login
+DELETE /api/diary/dreq3/{id} – Delete diary
 
-Diary
-POST   /api/diaries/user/{userId}
-GET    /api/diaries/user/{userId}
-GET    /api/diaries/{diaryId}
-DELETE /api/diaries/{diaryId}
+Frontend Integration
 
-⚙️ Configuration
+A simple frontend page (frontpage.html) is used to:
 
-Database configuration is managed in application.properties:
+Fetch all diary entries using Fetch API
 
-spring.datasource.url=jdbc:mysql://localhost:3306/d12
-spring.datasource.username=root
-spring.datasource.password=*****
-spring.jpa.hibernate.ddl-auto=update
+Display diary data in the browser
 
-▶️ How to Run the Project
+The frontend must be served using a local server (Live Server or similar) to avoid browser security restrictions.
+
+How to Run the Project
 
 Clone the repository
 
@@ -106,27 +120,39 @@ Update application.properties
 
 Run the Spring Boot application
 
-Test APIs using Postman
+Open frontend using Live Server
 
-📌 Future Enhancements
+Access APIs using browser or Postman
 
-Spring Security with JWT authentication
+Key Concepts Used
 
-Password encryption
+RESTful Web Services
 
-Role-based access
+Spring Boot Architecture
+
+Spring Data JPA
+
+Dependency Injection
+
+Controller-Service-DAO pattern
+
+Frontend and Backend integration
+
+Future Enhancements
+
+User authentication and authorization
+
+Validation and exception handling
 
 Update diary entries
 
-Pagination and search
+Improved frontend UI
+
+Security using Spring Security
 
 Deployment to cloud
 
-👨‍💻 Author
+Author
 
 Haridas Shinde
-Aspiring Java & Backend Developer
-
-📄 License
-
-This project is for learning and educational purposes.
+Java & Spring Boot Developer
