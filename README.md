@@ -5,6 +5,7 @@ The project follows a clean layered architecture and exposes RESTful APIs, which
 
 This application is mainly designed for learning and practicing Spring Boot, REST APIs, JPA, and frontend–backend integration in a real-world manner.
 
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
 🚀 Project Overview
 
 The Digital Diary application provides functionality to:
@@ -23,6 +24,7 @@ Display real-time diary data on frontend pages
 
 The focus of this project is backend correctness, API design, and data flow, rather than heavy UI styling.
 
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
 🛠 Technology Stack
 Backend
 
@@ -56,6 +58,7 @@ Postman
 
 Live Server (VS Code)
 
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
 📁 Project Structure
 com.demo
 ├── controller
@@ -79,6 +82,7 @@ com.demo
 │
 └── DiaryAppApplication.java
 
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
 🔁 Application Flow
 Controller → Service → DAO → Database
 
@@ -91,6 +95,7 @@ DAO (Repository) interacts with the database using JPA
 
 MySQL stores user and diary data
 
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
 🌐 REST API Endpoints
 👤 User APIs
 
@@ -106,6 +111,7 @@ GET /api/auth/id/{id}
 GET /api/auth/name/{name}
 → Fetch users by name
 
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
 📖 Diary APIs
 
 GET /api/diary/all
@@ -123,6 +129,7 @@ POST /api/diary/dreq2/save
 DELETE /api/diary/dreq3/{id}
 → Delete a diary entry
 
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
 🖥 Frontend Integration
 
 The frontend is implemented using plain HTML and JavaScript.
@@ -137,6 +144,7 @@ Shows diary count and diary list dynamically
 
 Communicates with backend using localhost URLs
 
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
 ⚠️ Important:
 The frontend must be opened using Live Server (or any local server).
 Opening HTML files directly may cause CORS and browser security issues.
@@ -155,6 +163,7 @@ Open frontend using Live Server
 
 Test APIs using browser or Postman
 
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
 🧠 Key Concepts Used
 
 RESTful Web Services
@@ -173,6 +182,7 @@ Frontend–Backend Integration
 
 Error handling and debugging in Spring Boot
 
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
 🔮 Future Enhancements
 
 User authentication & authorization
@@ -189,7 +199,8 @@ Spring Security & JWT integration
 
 Cloud deployment (AWS / Render / Railway)
 
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
 👨‍💻 Author
-
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
 Haridas Shinde
 Java & Spring Boot Developer
