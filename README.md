@@ -1,25 +1,30 @@
-Digital Diary Application
+📔 Digital Diary Application
 
-Digital Diary is a simple full-stack application built using Spring Boot that allows users to manage personal diary entries.
-The project follows a layered architecture and exposes REST APIs which are consumed by a basic frontend built using HTML and JavaScript.
+Digital Diary is a full-stack web application built using Spring Boot that allows users to create, manage, and view personal diary entries.
+The project follows a clean layered architecture and exposes RESTful APIs, which are consumed by a lightweight frontend built using HTML and JavaScript.
 
-Project Overview
+This application is mainly designed for learning and practicing Spring Boot, REST APIs, JPA, and frontend–backend integration in a real-world manner.
 
-The application provides functionality to:
+🚀 Project Overview
 
-Manage users
+The Digital Diary application provides functionality to:
 
-Create, view, and delete diary entries
+Register and manage users
 
-Fetch diary entries through REST APIs
+Create diary entries linked to users
 
-Display diary data on a simple frontend page
+View diaries user-wise and individually
 
-This project is designed for learning Spring Boot, REST APIs, JPA, and frontend-backend integration.
+Delete diary entries
 
-Technology Stack
+Fetch data through REST APIs
 
-Backend:
+Display real-time diary data on frontend pages
+
+The focus of this project is backend correctness, API design, and data flow, rather than heavy UI styling.
+
+🛠 Technology Stack
+Backend
 
 Java
 
@@ -31,14 +36,17 @@ Hibernate
 
 MySQL
 
-//(in progress)
-Frontend:
+Frontend
 
 HTML
 
-JavaScript (Fetch API)
+JavaScript
 
-Tools:
+Fetch API
+
+(UI styling is intentionally minimal to focus on logic and integration)
+
+Tools & Utilities
 
 Maven
 
@@ -46,71 +54,94 @@ Git & GitHub
 
 Postman
 
-Project Structure
-com.demo
- ├── controller
- │    ├── AuthController.java
- │    └── DiaryController.java
- ├── service
- │    ├── UserService.java
- │    ├── DiaryService.java
- │    └── impl
- │         ├── UserServiceImpl.java
- │         └── DiaryServiceImpl.java
- ├── dao
- │    ├── UserDao.java
- │    └── DiaryDao.java
- ├── model
- │    ├── User.java
- │    └── Diary.java
- └── DiaryAppApplication.java
+Live Server (VS Code)
 
-Application Flow
+📁 Project Structure
+com.demo
+├── controller
+│   ├── AuthController.java
+│   └── DiaryController.java
+│
+├── service
+│   ├── UserService.java
+│   ├── DiaryService.java
+│   └── impl
+│       ├── UserServiceImpl.java
+│       └── DiaryServiceImpl.java
+│
+├── dao
+│   ├── UserDao.java
+│   └── DiaryDao.java
+│
+├── model
+│   ├── User.java
+│   └── Diary.java
+│
+└── DiaryAppApplication.java
+
+🔁 Application Flow
 Controller → Service → DAO → Database
 
 
-Controller handles HTTP requests
+Controller handles HTTP requests and responses
 
 Service contains business logic
 
-DAO interacts with the database using JPA
+DAO (Repository) interacts with the database using JPA
 
-MySQL stores application data
+MySQL stores user and diary data
 
-REST API Endpoints
-User APIs
+🌐 REST API Endpoints
+👤 User APIs
 
-GET /api/auth/all – Get all users
+GET /api/auth/all
+→ Fetch all users
 
-GET /api/auth/email/{email} – Get user by email
+GET /api/auth/email/{email}
+→ Fetch user by email
 
-GET /api/auth/id/{id} – Get user by id
+GET /api/auth/id/{id}
+→ Fetch user by ID
 
-GET /api/auth/name/{name} – Get users by name
+GET /api/auth/name/{name}
+→ Fetch users by name
 
-Diary APIs
+📖 Diary APIs
 
-GET /api/diary/all – Get all diary entries
+GET /api/diary/all
+→ Fetch all diary entries
 
-GET /api/diary/dreq/{userId} – Get diaries by userId
+GET /api/diary/dreq/{userId}
+→ Fetch all diaries of a specific user
 
-GET /api/diary/dreq1/{id} – Get diary by diaryId
+GET /api/diary/dreq1/{id}
+→ Fetch diary by diary ID
 
-POST /api/diary/dreq2/save – Save diary
+POST /api/diary/dreq2/save
+→ Create and save a new diary entry
 
-DELETE /api/diary/dreq3/{id} – Delete diary
+DELETE /api/diary/dreq3/{id}
+→ Delete a diary entry
 
-Frontend Integration
+🖥 Frontend Integration
 
-A simple frontend page (frontpage.html) is used to:
+The frontend is implemented using plain HTML and JavaScript.
 
-Fetch all diary entries using Fetch API
+Key points:
 
-Display diary data in the browser
+Uses Fetch API to call backend REST endpoints
 
-The frontend must be served using a local server (Live Server or similar) to avoid browser security restrictions.
+Displays user-specific diary data
 
-How to Run the Project
+Shows diary count and diary list dynamically
+
+Communicates with backend using localhost URLs
+
+⚠️ Important:
+The frontend must be opened using Live Server (or any local server).
+Opening HTML files directly may cause CORS and browser security issues.
+
+▶️ How to Run the Project
 
 Clone the repository
 
@@ -122,37 +153,43 @@ Run the Spring Boot application
 
 Open frontend using Live Server
 
-Access APIs using browser or Postman
+Test APIs using browser or Postman
 
-Key Concepts Used
+🧠 Key Concepts Used
 
 RESTful Web Services
 
 Spring Boot Architecture
 
-Spring Data JPA
+Spring Data JPA & Hibernate
 
 Dependency Injection
 
-Controller-Service-DAO pattern
+Controller–Service–DAO Pattern
 
-Frontend and Backend integration
+Entity Relationships (@ManyToOne)
 
-Future Enhancements
+Frontend–Backend Integration
 
-User authentication and authorization
+Error handling and debugging in Spring Boot
 
-Validation and exception handling
+🔮 Future Enhancements
 
-Update diary entries
+User authentication & authorization
+
+Input validation and global exception handling
+
+Update diary entries (edit feature)
+
+Pagination and sorting of diaries
 
 Improved frontend UI
 
-Security using Spring Security
+Spring Security & JWT integration
 
-Deployment to cloud
+Cloud deployment (AWS / Render / Railway)
 
-Author
+👨‍💻 Author
 
 Haridas Shinde
 Java & Spring Boot Developer
