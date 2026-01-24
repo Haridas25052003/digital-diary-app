@@ -11,6 +11,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Transient;
 
 @Entity
 public class Diary {
@@ -30,7 +31,17 @@ public class Diary {
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name = "user_id", nullable = false)
 	private User user;
+	
 
+    @Transient
+    private int userId;
+
+	public int getUserId() {
+		return userId;
+	}
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
 	public int getId() {
 		return id;
 	}

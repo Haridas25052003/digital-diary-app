@@ -10,6 +10,7 @@ import com.demo.service.DiaryService;
 
 @RestController
 @RequestMapping("/api/diary")   // important to avoid mapping conflict
+@CrossOrigin(origins = "http://127.0.0.1:5500")
 public class DiaryController {
 
     @Autowired

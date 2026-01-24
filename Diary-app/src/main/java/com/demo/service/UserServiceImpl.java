@@ -50,4 +50,10 @@ public class UserServiceImpl implements UserService{
 		return ud.existsByEmail(email);
 	}
 
+	@Override
+	public User save(User user) {
+		
+		return ud.save(user);
+	}
+
 }

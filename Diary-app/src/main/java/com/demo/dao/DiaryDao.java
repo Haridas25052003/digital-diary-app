@@ -12,8 +12,8 @@ public interface DiaryDao extends JpaRepository<Diary,Integer>{
 	
 	List<Diary> findAll();
 	
-	List<Diary> findByUserId(int userId);
-	
+	//List<Diary> findByUserId(int userId);
+	  List<Diary> findByUser_Id(int userId);
 	List<Diary> findById(int id);
 	
 	//void deleteDiary(int id);

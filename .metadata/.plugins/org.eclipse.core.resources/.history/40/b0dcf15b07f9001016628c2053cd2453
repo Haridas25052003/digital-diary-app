@@ -1,0 +1,57 @@
+package com.demo.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.demo.dao.DiaryDao;
+import com.demo.model.Diary;
+import com.demo.model.User;
+
+@Service
+public class DiaryServiceImpl implements DiaryService{
+
+	@Autowired
+	private DiaryDao dd;
+	
+	@Override
+	public List<Diary> findAll() {
+		
+		return dd.findAll();
+	}
+
+	@Override
+	public List<Diary> findByUserId(int userId) {
+		
+		return dd.findByUserId(userId);
+	}
+
+	@Override
+	public List<Diary> findById(int id) {
+		
+		return dd.findById(id);
+	}
+
+
+	 @Override
+	    public Diary saveDiary(Diary diary) {
+
+	        
+	        if (diary.getUser() == null && diary.getUserId() != 0) {
+	            User user = dd.findById(diary.getUserId())
+	                                .orElseThrow(() -> 
+	                                    new RuntimeException("User not found"));
+	            diary.setUser(user);
+	        }
+
+	        return dd.save(diary);
+	    }
+
+	@Override
+	public void deleteDiary(int id) {
+		dd.deleteById(id);
+		
+	}
+
+}

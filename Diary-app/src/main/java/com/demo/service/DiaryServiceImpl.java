@@ -23,7 +23,7 @@ public class DiaryServiceImpl implements DiaryService{
 	@Override
 	public List<Diary> findByUserId(int userId) {
 		
-		return dd.findByUserId(userId);
+		return dd.findByUser_Id(userId);
 	}
 
 	@Override

@@ -10,10 +10,26 @@ import com.demo.service.UserService;
 
 @RestController
 @RequestMapping("/api/auth")   
+@CrossOrigin(origins = "http://127.0.0.1:5500")
 public class AuthController {
 
     @Autowired
     private UserService us;
+    
+
+    @PostMapping("/register")
+    public User register(@RequestBody User user) {
+        return us.save(user);
+    }
+
+    @PostMapping("/login")
+    public User login(@RequestBody User user) {
+        return us.findByEmail(user.getEmail())
+                 .stream()
+                 .findFirst()
+                 .orElse(null);
+    }
+
 
     @GetMapping("/all")
     public List<User> getAllUsers() {
