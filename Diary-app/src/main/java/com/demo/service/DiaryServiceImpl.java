@@ -32,8 +32,9 @@ public class DiaryServiceImpl implements DiaryService {
 
     @Override
     public List<Diary> getDiariesByUserId(int userId) {
-        return diaryDao.findByUserId(userId);
+        return diaryDao.findByUser_Id(userId);
     }
+
 
     @Override
     public List<Diary> getDiariesByCategory(String category) {

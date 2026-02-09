@@ -15,6 +15,7 @@ public interface DiaryService {
 
     List<Diary> getDiariesByUserId(int userId);
 
+
     List<Diary> getDiariesByCategory(String category);
 
     void deleteDiary(int id);

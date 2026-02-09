@@ -17,7 +17,6 @@ INDEX VERSION 1.134+D:\Digital-Diary\.metadata\.plugins\org.eclipse.jdt.core
 504155995.index
 1533141129.index
 804881558.index
-4159066160.index
 2495500163.index
 495041757.index
 1616926683.index
