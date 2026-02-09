@@ -1,6 +1,7 @@
 package com.demo.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,52 +9,34 @@ import org.springframework.stereotype.Service;
 import com.demo.dao.UserDao;
 import com.demo.model.User;
 
-@Service //for showing the business logic 
-public class UserServiceImpl implements UserService{
+@Service
+public class UserServiceImpl implements UserService {
 
-	@Autowired //used for automatic dependency injection
-	private UserDao ud;
-	
-	@Override
-	public List<User> findAll() {
-		
-		return ud.findAll();
-	}
+    @Autowired
+    private UserDao userDao;
 
-	@Override
-	public List<User> findByEmail(String email) {
-		
-		return ud.findByEmail(email);
-	}
+    @Override
+    public User saveUser(User user) {
+        return userDao.save(user);
+    }
 
-	@Override
-	public List<User> findById(int id) {
-		
-		return ud.findById(id);
-	}
+    @Override
+    public List<User> getAllUsers() {
+        return userDao.findAll();
+    }
 
-	@Override
-	public List<User> findByName(String name) {
-		
-		return ud.findByName(name);
-	}
+    @Override
+    public Optional<User> getUserById(int id) {
+        return userDao.findById(id);
+    }
 
-	@Override
-	public User saveUser(User user) {
-		
-		return ud.save(user);
-	}
+    @Override
+    public Optional<User> getUserByEmail(String email) {
+        return userDao.findByEmail(email);
+    }
 
-	@Override
-	public boolean existsByEmail(String email) {
-		
-		return ud.existsByEmail(email);
-	}
-
-	@Override
-	public User save(User user) {
-		
-		return ud.save(user);
-	}
-
+    @Override
+    public boolean existsByEmail(String email) {
+        return userDao.existsByEmail(email);
+    }
 }

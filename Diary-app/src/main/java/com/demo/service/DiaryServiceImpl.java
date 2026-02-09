@@ -1,6 +1,7 @@
 package com.demo.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,39 +10,38 @@ import com.demo.dao.DiaryDao;
 import com.demo.model.Diary;
 
 @Service
-public class DiaryServiceImpl implements DiaryService{
+public class DiaryServiceImpl implements DiaryService {
 
-	@Autowired
-	private DiaryDao dd;
-	
-	@Override
-	public List<Diary> findAll() {
-		
-		return dd.findAll();
-	}
+    @Autowired
+    private DiaryDao diaryDao;
 
-	@Override
-	public List<Diary> findByUserId(int userId) {
-		
-		return dd.findByUser_Id(userId);
-	}
+    @Override
+    public Diary saveDiary(Diary diary) {
+        return diaryDao.save(diary);
+    }
 
-	@Override
-	public List<Diary> findById(int id) {
-		
-		return dd.findById(id);
-	}
+    @Override
+    public List<Diary> getAllDiaries() {
+        return diaryDao.findAll();
+    }
 
-	@Override
-	public Diary saveDiary(Diary diary) {
-		
-		return dd.save(diary);
-	}
+    @Override
+    public Optional<Diary> getDiaryById(int id) {
+        return diaryDao.findById(id);
+    }
 
-	@Override
-	public void deleteDiary(int id) {
-		dd.deleteById(id);
-		
-	}
+    @Override
+    public List<Diary> getDiariesByUserId(int userId) {
+        return diaryDao.findByUserId(userId);
+    }
 
+    @Override
+    public List<Diary> getDiariesByCategory(String category) {
+        return diaryDao.findByCategory(category);
+    }
+
+    @Override
+    public void deleteDiary(int id) {
+        diaryDao.deleteById(id);
+    }
 }

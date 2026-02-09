@@ -8,13 +8,7 @@ import com.demo.model.Diary;
 
 public interface DiaryDao extends JpaRepository<Diary,Integer>{
 
-	//Diary saveDiary(Diary diary);
-	
-	List<Diary> findAll();
-	
-	//List<Diary> findByUserId(int userId);
-	  List<Diary> findByUser_Id(int userId);
-	List<Diary> findById(int id);
-	
-	//void deleteDiary(int id);
+	List<Diary> findByUserId(int userId);
+
+    List<Diary> findByCategory(String category);
 }

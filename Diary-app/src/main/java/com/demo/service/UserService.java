@@ -1,22 +1,19 @@
 package com.demo.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.demo.model.User;
 
 public interface UserService {
 
-	User saveUser(User user);
-	
-	List<User> findAll();
-	
-    List<User> findByEmail(String email);
-	
-	List<User> findById(int id);
-	
-	List<User> findByName(String name);
-	
-	boolean existsByEmail(String email);
+    User saveUser(User user);
 
-	User save(User user);
+    List<User> getAllUsers();
+
+    Optional<User> getUserById(int id);
+
+    Optional<User> getUserByEmail(String email);
+
+    boolean existsByEmail(String email);
 }

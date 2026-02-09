@@ -9,36 +9,40 @@ import com.demo.model.Diary;
 import com.demo.service.DiaryService;
 
 @RestController
-@RequestMapping("/api/diary")   // important to avoid mapping conflict
-@CrossOrigin(origins = "http://127.0.0.1:5500")
+@RequestMapping("/api/diaries")
 public class DiaryController {
 
     @Autowired
-    private DiaryService ds;
+    private DiaryService diaryService;
 
-    @GetMapping("/all")
+    // Create diary
+    @PostMapping
+    public Diary createDiary(@RequestBody Diary diary) {
+        return diaryService.saveDiary(diary);
+    }
+
+    // Get all diaries
+    @GetMapping
     public List<Diary> getAllDiaries() {
-        return ds.findAll();
+        return diaryService.getAllDiaries();
     }
 
-    @GetMapping("/dreq/{userId}")
-    public List<Diary> getDiariesByUserId(@PathVariable int userId) {
-        return ds.findByUserId(userId);
-    }
- 
-    @GetMapping("/dreq1/{id}")
-    public List<Diary> getDiaryById(@PathVariable int id) {
-        return ds.findById(id);
+    // Get diary by ID
+    @GetMapping("/{id}")
+    public Diary getDiaryById(@PathVariable int id) {
+        return diaryService.getDiaryById(id).orElse(null);
     }
 
-    @PostMapping("/dreq2/save")
-    public Diary saveDiary(@RequestBody Diary diary) {
-        return ds.saveDiary(diary);
+    // Get diaries by user ID
+    @GetMapping("/user/{userId}")
+    public List<Diary> getDiariesByUser(@PathVariable int userId) {
+        return diaryService.getDiariesByUserId(userId);
     }
-    
-    @DeleteMapping("/dreq3/{id}")
+
+    // Delete diary
+    @DeleteMapping("/{id}")
     public String deleteDiary(@PathVariable int id) {
-        ds.deleteDiary(id);
+        diaryService.deleteDiary(id);
         return "Diary deleted successfully";
     }
 }

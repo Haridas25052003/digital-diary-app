@@ -9,45 +9,33 @@ import com.demo.model.User;
 import com.demo.service.UserService;
 
 @RestController
-@RequestMapping("/api/auth")   
-@CrossOrigin(origins = "http://127.0.0.1:5500")
+@RequestMapping("/api/users")
 public class AuthController {
 
     @Autowired
-    private UserService us;
-    
+    private UserService userService;
 
-    @PostMapping("/register")
-    public User register(@RequestBody User user) {
-        return us.save(user);
+    // Create user
+    @PostMapping
+    public User createUser(@RequestBody User user) {
+        return userService.saveUser(user);
     }
 
-    @PostMapping("/login")
-    public User login(@RequestBody User user) {
-        return us.findByEmail(user.getEmail())
-                 .stream()
-                 .findFirst()
-                 .orElse(null);
-    }
-
-
-    @GetMapping("/all")
+    // Get all users
+    @GetMapping
     public List<User> getAllUsers() {
-        return us.findAll();
+        return userService.getAllUsers();
     }
 
-    @GetMapping("/req1/{email}")
-    public List<User> getUserByEmail(@PathVariable String email) {
-        return us.findByEmail(email);
+    // Get user by ID
+    @GetMapping("/{id}")
+    public User getUserById(@PathVariable int id) {
+        return userService.getUserById(id).orElse(null);
     }
 
-    @GetMapping("/req2/{id}")
-    public List<User> getUserById(@PathVariable int id) {
-        return us.findById(id);
-    }
-
-    @GetMapping("/req3/{name}")
-    public List<User> getUsersByName(@PathVariable String name) {
-        return us.findByName(name);
+    // Get user by email
+    @GetMapping("/email/{email}")
+    public User getUserByEmail(@PathVariable String email) {
+        return userService.getUserByEmail(email).orElse(null);
     }
 }
