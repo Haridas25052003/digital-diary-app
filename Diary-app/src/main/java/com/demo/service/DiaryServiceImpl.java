@@ -3,7 +3,6 @@ package com.demo.service;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.demo.dao.DiaryDao;
@@ -12,8 +11,12 @@ import com.demo.model.Diary;
 @Service
 public class DiaryServiceImpl implements DiaryService {
 
-    @Autowired
-    private DiaryDao diaryDao;
+    private final DiaryDao diaryDao;
+
+    // ✅ Constructor Injection (replaces @Autowired field injection)
+    public DiaryServiceImpl(DiaryDao diaryDao) {
+        this.diaryDao = diaryDao;
+    }
 
     @Override
     public Diary saveDiary(Diary diary) {
@@ -34,7 +37,6 @@ public class DiaryServiceImpl implements DiaryService {
     public List<Diary> getDiariesByUserId(int userId) {
         return diaryDao.findByUser_Id(userId);
     }
-
 
     @Override
     public List<Diary> getDiariesByCategory(String category) {
