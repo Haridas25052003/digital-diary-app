@@ -10,75 +10,71 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.demo.exception.BadRequestException;
+import com.demo.exception.ResourceNotFoundException;
 import com.demo.model.User;
 import com.demo.service.UserService;
 
 @RestController
 @RequestMapping("/api/users")
+@CrossOrigin(origins = "*")   // Allow frontend calls during development
 public class AuthController {
 
     private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
 
     private final UserService userService;
 
-    // ✅ Constructor Injection
+    // ✅ Constructor Injection (no @Autowired needed on constructor)
     public AuthController(UserService userService) {
         this.userService = userService;
     }
 
-    // ✅ CREATE USER
+    // ✅ REGISTER USER
     @PostMapping
-    public ResponseEntity<?> createUser(@Valid @RequestBody User user) {
+    public ResponseEntity<User> createUser(@Valid @RequestBody User user) {
+        logger.info("Registering user with email: {}", user.getEmail());
 
-        logger.info("Creating user with email: {}", user.getEmail());
-
-        // ✅ Prevent duplicate email
         if (userService.existsByEmail(user.getEmail())) {
-            logger.warn("Attempt to register duplicate email: {}", user.getEmail());
-            return ResponseEntity
-                    .status(HttpStatus.BAD_REQUEST)
-                    .body("Email already exists!");
+            throw new BadRequestException("Email already registered: " + user.getEmail());
         }
 
         User savedUser = userService.saveUser(user);
+        logger.info("User registered with ID: {}", savedUser.getId());
 
-        logger.info("User created successfully with ID: {}", savedUser.getId());
-
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(savedUser);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedUser);
     }
 
     // ✅ GET ALL USERS
     @GetMapping
     public ResponseEntity<List<User>> getAllUsers() {
-
         logger.info("Fetching all users");
-
         return ResponseEntity.ok(userService.getAllUsers());
     }
 
     // ✅ GET USER BY ID
     @GetMapping("/{id}")
     public ResponseEntity<User> getUserById(@PathVariable int id) {
-
         logger.info("Fetching user by ID: {}", id);
 
         User user = userService.getUserById(id)
-                .orElseThrow(() -> new RuntimeException("User not found with ID: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with ID: " + id));
 
         return ResponseEntity.ok(user);
     }
 
-    // ✅ LOGIN (GET BY EMAIL)
-    @GetMapping("/email/{email}")
-    public ResponseEntity<User> getUserByEmail(@PathVariable String email) {
+    // ✅ LOGIN — find user by email + validate password
+    @PostMapping("/login")
+    public ResponseEntity<User> login(@RequestBody User loginRequest) {
+        logger.info("Login attempt for email: {}", loginRequest.getEmail());
 
-        logger.info("Fetching user by email: {}", email);
+        User user = userService.getUserByEmail(loginRequest.getEmail())
+                .orElseThrow(() -> new ResourceNotFoundException("No account found with email: " + loginRequest.getEmail()));
 
-        User user = userService.getUserByEmail(email)
-                .orElseThrow(() -> new RuntimeException("User not found with email: " + email));
+        if (!user.getPassword().equals(loginRequest.getPassword())) {
+            throw new BadRequestException("Incorrect password. Please try again.");
+        }
 
+        logger.info("Login successful for user ID: {}", user.getId());
         return ResponseEntity.ok(user);
     }
 }
