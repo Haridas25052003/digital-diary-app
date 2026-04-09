@@ -63,3 +63,71 @@ public class User {
 		this.createdAt = createdAt;
 	}
 }
+
+/*
+
+Act as a senior Spring Boot architect and full-stack developer with 20+ years of experience.
+
+I have built a backend project called "Digital Diary" using Spring Boot with the following features:
+
+* REST APIs for User and Diary management
+* Layered architecture (Controller, Service, DAO, Model)
+* JPA relationships (One-to-Many between User and Diary)
+* CRUD operations for diary entries
+
+Now I want to OPTIMIZE and UPGRADE this project into a FULL-STACK application.
+
+Your tasks:
+
+1. Analyze and improve backend:
+
+   * Add proper exception handling (GlobalExceptionHandler)
+   * Add validation annotations (@Valid, @Email, etc.)
+   * Replace field injection with constructor injection
+   * Avoid returning null (use Optional properly)
+   * Add update APIs (PUT/PATCH)
+   * Suggest DTO pattern if needed
+
+2. Frontend Integration (IMPORTANT):
+
+   * Create multiple frontend pages using HTML, CSS, JS (no React)
+   * Pages required:
+
+     * Login Page
+     * Register Page
+     * Dashboard Page
+     * Create Diary Page
+     * View Diaries Page
+     * Edit Diary Page
+   * Connect frontend with backend APIs using fetch()
+
+3. Static Folder Structure:
+
+   * Organize CSS, JS, and images properly
+   * Follow best practices for Spring Boot static resources
+
+4. UI/UX:
+
+   * Modern, clean, responsive UI
+   * Use simple animations and good layout
+
+5. Security (Basic):
+
+   * Add simple login validation (no JWT needed initially)
+   * Prevent duplicate email registration
+
+6. Performance & Code Quality:
+
+   * Optimize code readability
+   * Follow industry best practices
+
+7. Output Required:
+
+   * Updated backend code (only improved parts)
+   * Complete frontend HTML, CSS, JS files
+   * Proper folder structure
+   * Step-by-step explanation
+
+Make the project PROFESSIONAL and INTERVIEW-READY.
+
+ */

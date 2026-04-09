@@ -2,7 +2,12 @@ package com.demo.controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.validation.Valid;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.demo.model.User;
@@ -12,30 +17,68 @@ import com.demo.service.UserService;
 @RequestMapping("/api/users")
 public class AuthController {
 
-    @Autowired
-    private UserService userService;
+    private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
 
-    // Create user
+    private final UserService userService;
+
+    // ✅ Constructor Injection
+    public AuthController(UserService userService) {
+        this.userService = userService;
+    }
+
+    // ✅ CREATE USER
     @PostMapping
-    public User createUser(@RequestBody User user) {
-        return userService.saveUser(user);
+    public ResponseEntity<?> createUser(@Valid @RequestBody User user) {
+
+        logger.info("Creating user with email: {}", user.getEmail());
+
+        // ✅ Prevent duplicate email
+        if (userService.existsByEmail(user.getEmail())) {
+            logger.warn("Attempt to register duplicate email: {}", user.getEmail());
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body("Email already exists!");
+        }
+
+        User savedUser = userService.saveUser(user);
+
+        logger.info("User created successfully with ID: {}", savedUser.getId());
+
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(savedUser);
     }
 
-    // Get all users
+    // ✅ GET ALL USERS
     @GetMapping
-    public List<User> getAllUsers() {
-        return userService.getAllUsers();
+    public ResponseEntity<List<User>> getAllUsers() {
+
+        logger.info("Fetching all users");
+
+        return ResponseEntity.ok(userService.getAllUsers());
     }
 
-    // Get user by ID
+    // ✅ GET USER BY ID
     @GetMapping("/{id}")
-    public User getUserById(@PathVariable int id) {
-        return userService.getUserById(id).orElse(null);
+    public ResponseEntity<User> getUserById(@PathVariable int id) {
+
+        logger.info("Fetching user by ID: {}", id);
+
+        User user = userService.getUserById(id)
+                .orElseThrow(() -> new RuntimeException("User not found with ID: " + id));
+
+        return ResponseEntity.ok(user);
     }
 
-    // Get user by email
+    // ✅ LOGIN (GET BY EMAIL)
     @GetMapping("/email/{email}")
-    public User getUserByEmail(@PathVariable String email) {
-        return userService.getUserByEmail(email).orElse(null);
+    public ResponseEntity<User> getUserByEmail(@PathVariable String email) {
+
+        logger.info("Fetching user by email: {}", email);
+
+        User user = userService.getUserByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found with email: " + email));
+
+        return ResponseEntity.ok(user);
     }
 }
