@@ -13,7 +13,7 @@ public class DiaryServiceImpl implements DiaryService {
 
     private final DiaryDao diaryDao;
 
-    // ✅ Constructor Injection (replaces @Autowired field injection)
+    //  Constructor Injection (replaces @Autowired field injection)
     public DiaryServiceImpl(DiaryDao diaryDao) {
         this.diaryDao = diaryDao;
     }

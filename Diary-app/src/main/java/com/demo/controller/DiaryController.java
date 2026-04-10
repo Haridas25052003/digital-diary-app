@@ -26,13 +26,13 @@ public class DiaryController {
     private final DiaryService diaryService;
     private final UserService userService;
 
-    // ✅ Constructor Injection
+    //  Constructor Injection
     public DiaryController(DiaryService diaryService, UserService userService) {
         this.diaryService = diaryService;
         this.userService = userService;
     }
 
-    // ✅ CREATE DIARY
+    // CREATE DIARY
     // Frontend sends { title, content, category, userId }
     @PostMapping
     public ResponseEntity<Diary> createDiary(@Valid @RequestBody Diary diary) {
@@ -50,14 +50,14 @@ public class DiaryController {
         return ResponseEntity.status(HttpStatus.CREATED).body(savedDiary);
     }
 
-    // ✅ GET ALL DIARIES
+    //  GET ALL DIARIES
     @GetMapping
     public ResponseEntity<List<Diary>> getAllDiaries() {
         logger.info("Fetching all diaries");
         return ResponseEntity.ok(diaryService.getAllDiaries());
     }
 
-    // ✅ GET DIARY BY ID
+    // GET DIARY BY ID
     @GetMapping("/{id}")
     public ResponseEntity<Diary> getDiaryById(@PathVariable int id) {
         logger.info("Fetching diary by ID: {}", id);
@@ -68,7 +68,7 @@ public class DiaryController {
         return ResponseEntity.ok(diary);
     }
 
-    // ✅ GET DIARIES BY USER ID
+    // GET DIARIES BY USER ID
     @GetMapping("/user/{userId}")
     public ResponseEntity<List<Diary>> getDiariesByUser(@PathVariable int userId) {
         logger.info("Fetching diaries for user ID: {}", userId);
@@ -80,14 +80,14 @@ public class DiaryController {
         return ResponseEntity.ok(diaryService.getDiariesByUserId(userId));
     }
 
-    // ✅ FILTER BY CATEGORY
+    //  FILTER BY CATEGORY
     @GetMapping("/category/{category}")
     public ResponseEntity<List<Diary>> getDiariesByCategory(@PathVariable String category) {
         logger.info("Fetching diaries by category: {}", category);
         return ResponseEntity.ok(diaryService.getDiariesByCategory(category));
     }
 
-    // ✅ UPDATE DIARY (PUT)
+    //  UPDATE DIARY (PUT)
     @PutMapping("/{id}")
     public ResponseEntity<Diary> updateDiary(@PathVariable int id,
                                              @Valid @RequestBody Diary updatedDiary) {
@@ -106,7 +106,7 @@ public class DiaryController {
         return ResponseEntity.ok(saved);
     }
 
-    // ✅ DELETE DIARY
+    //  DELETE DIARY
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteDiary(@PathVariable int id) {
         logger.info("Deleting diary ID: {}", id);

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>My Diaries — Digital Diary</title>
+    <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+
+<nav class="navbar">
+    <a class="navbar-brand" href="index.html">📖 Digital<span>Diary</span></a>
+    <ul class="navbar-links" id="navLinks"></ul>
+</nav>
+
+<div class="page-wrapper">
+
+    <div class="diaries-toolbar">
+        <h2>My Diaries</h2>
+        <a href="create-diary.html" class="btn btn-primary">+ New Entry</a>
+    </div>
+
+    <!-- ─── Category Filter Bar ───────────────────────────────── -->
+    <div class="filter-bar" id="filterBar" style="margin-bottom:1.5rem;">
+        <button class="filter-btn active" data-category="all">All</button>
+        <button class="filter-btn" data-category="Personal">Personal</button>
+        <button class="filter-btn" data-category="Work">Work</button>
+        <button class="filter-btn" data-category="Travel">Travel</button>
+        <button class="filter-btn" data-category="Health">Health</button>
+        <button class="filter-btn" data-category="Learning">Learning</button>
+        <button class="filter-btn" data-category="Gratitude">Gratitude</button>
+        <button class="filter-btn" data-category="Goals">Goals</button>
+        <button class="filter-btn" data-category="Other">Other</button>
+    </div>
+
+    <!-- ─── Diary Grid ────────────────────────────────────────── -->
+    <div id="diaryGrid" class="diary-grid">
+        <p style="color:var(--ink-muted)">Loading your entries...</p>
+    </div>
+
+</div>
+
+<script src="js/app.js"></script>
+<script>
+    requireAuth();
+    const user = getUser();
+
+    let allDiaries = [];
+    let activeCategory = 'all';
+
+    // Check if URL has a category param (from dashboard quick-link)
+    const urlParams = new URLSearchParams(window.location.search);
+    const paramCategory = urlParams.get('category');
+    if (paramCategory) activeCategory = paramCategory;
+
+    async function loadDiaries() {
+      try {
+        allDiaries = await getDiariesByUser(user.id);
+        renderDiaries();
+      } catch (err) {
+        document.getElementById('diaryGrid').innerHTML =
+          '<p style="color:var(--rust)">Failed to load diaries. Please try again.</p>';
+      }
+    }
+
+    function renderDiaries() {
+      const grid = document.getElementById('diaryGrid');
+      const filtered = activeCategory === 'all'
+        ? allDiaries
+        : allDiaries.filter(d => d.category === activeCategory);
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `
+          <div class="empty-state" style="grid-column:1/-1">
+            <div class="empty-icon">📭</div>
+            <h3>No entries yet</h3>
+            <p>${activeCategory === 'all' ? 'Start writing your first diary entry!' : `No entries in "${activeCategory}".`}</p>
+            <a href="create-diary.html" class="btn btn-primary" style="margin-top:1rem">Write Now</a>
+          </div>
+        `;
+        return;
+      }
+
+      grid.innerHTML = filtered.map(diary => `
+        <div class="diary-card">
+          <div class="diary-card-meta">
+            <span class="diary-category">${diary.category || 'Uncategorized'}</span>
+            <span class="diary-date">${formatDate(diary.createdAt)}</span>
+          </div>
+          <h3>${escapeHtml(diary.title)}</h3>
+          <p>${escapeHtml(diary.content)}</p>
+          <div class="diary-card-actions">
+            <button class="btn btn-edit" onclick="editDiary(${diary.id})">✏️ Edit</button>
+            <button class="btn btn-danger" onclick="handleDelete(${diary.id}, this)">🗑️ Delete</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    async function handleDelete(id, btn) {
+      if (!confirm('Delete this diary entry? This cannot be undone.')) return;
+      btn.disabled = true;
+      btn.textContent = 'Deleting...';
+      try {
+        await deleteDiary(id);
+        allDiaries = allDiaries.filter(d => d.id !== id);
+        renderDiaries();
+      } catch {
+        btn.disabled = false;
+        btn.textContent = '🗑️ Delete';
+        alert('Failed to delete entry. Please try again.');
+      }
+    }
+
+    function editDiary(id) {
+      window.location.href = `edit-diary.html?id=${id}`;
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    }
+
+    // ─── Filter buttons ─────────────────────────────────────────
+    document.getElementById('filterBar').addEventListener('click', (e) => {
+      if (!e.target.classList.contains('filter-btn')) return;
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      e.target.classList.add('active');
+      activeCategory = e.target.dataset.category;
+      renderDiaries();
+    });
+
+    // Set active filter from URL param
+    if (paramCategory) {
+      document.querySelectorAll('.filter-btn').forEach(b => {
+        b.classList.toggle('active', b.dataset.category === paramCategory);
+      });
+    }
+
+    loadDiaries();
+</script>
+</body>
+</html>

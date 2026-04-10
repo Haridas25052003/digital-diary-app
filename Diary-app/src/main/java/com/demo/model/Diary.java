@@ -36,11 +36,11 @@ public class Diary {
 	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "diaries", "password"})
 	private User user;
 
-	// ✅ Transient field: accepts userId from frontend JSON
+	//  Transient field: accepts userId from frontend JSON
 	@Transient
 	private int userId;
 
-	// ✅ Auto-set timestamp before saving
+	//  Auto-set timestamp before saving
 	@PrePersist
 	protected void onCreate() {
 		this.createdAt = LocalDateTime.now();

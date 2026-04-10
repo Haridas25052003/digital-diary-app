@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Dashboard — Digital Diary</title>
+    <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+
+<nav class="navbar">
+    <a class="navbar-brand" href="index.html">📖 Digital<span>Diary</span></a>
+    <ul class="navbar-links" id="navLinks"></ul>
+</nav>
+
+<div class="page-wrapper">
+
+    <!-- ─── Greeting Header ───────────────────────────────────── -->
+    <div class="dashboard-header">
+        <div class="dashboard-greeting">
+            <h2 id="greetingText">Good morning! 👋</h2>
+            <p id="greetingName">Loading your profile...</p>
+        </div>
+        <div class="dashboard-avatar" id="userAvatar">?</div>
+    </div>
+
+    <!-- ─── Stats ─────────────────────────────────────────────── -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-number" id="statTotal">—</div>
+            <div class="stat-label">Total Entries</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number" id="statThisMonth">—</div>
+            <div class="stat-label">This Month</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number" id="statCategories">—</div>
+            <div class="stat-label">Categories Used</div>
+        </div>
+    </div>
+
+    <!-- ─── Quick Actions ─────────────────────────────────────── -->
+    <div class="page-header">
+        <h2>Quick Actions</h2>
+        <p>Jump right in</p>
+    </div>
+
+    <div class="dashboard-actions">
+        <a href="create-diary.html" class="action-card">
+            <div class="action-card-icon">✍️</div>
+            <h3>New Entry</h3>
+            <p>Write what's on your mind today</p>
+        </a>
+        <a href="view-diaries.html" class="action-card">
+            <div class="action-card-icon">📚</div>
+            <h3>My Diaries</h3>
+            <p>Browse and manage all your entries</p>
+        </a>
+        <a href="view-diaries.html?category=Personal" class="action-card">
+            <div class="action-card-icon">🏠</div>
+            <h3>Personal</h3>
+            <p>Personal thoughts and reflections</p>
+        </a>
+        <a href="view-diaries.html?category=Work" class="action-card">
+            <div class="action-card-icon">💼</div>
+            <h3>Work</h3>
+            <p>Professional notes and goals</p>
+        </a>
+    </div>
+
+</div>
+
+<script src="js/app.js"></script>
+<script>
+    requireAuth();
+
+    const user = getUser();
+
+    // Set greeting
+    const hour = new Date().getHours();
+    const greeting = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening';
+    document.getElementById('greetingText').textContent = `${greeting}! 👋`;
+    document.getElementById('greetingName').textContent = `Welcome back, ${user.name}`;
+    document.getElementById('userAvatar').textContent = getInitials(user.name);
+
+    // Load diary stats
+    async function loadStats() {
+      try {
+        const diaries = await getDiariesByUser(user.id);
+        const now = new Date();
+        const thisMonth = diaries.filter(d => {
+          const created = new Date(d.createdAt);
+          return created.getMonth() === now.getMonth() &&
+                 created.getFullYear() === now.getFullYear();
+        });
+        const categories = new Set(diaries.map(d => d.category).filter(Boolean));
+
+        document.getElementById('statTotal').textContent      = diaries.length;
+        document.getElementById('statThisMonth').textContent  = thisMonth.length;
+        document.getElementById('statCategories').textContent = categories.size;
+      } catch {
+        document.getElementById('statTotal').textContent = '?';
+      }
+    }
+
+    loadStats();
+</script>
+</body>
+</html>

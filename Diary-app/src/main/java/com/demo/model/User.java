@@ -39,7 +39,7 @@ public class User {
 	@JsonIgnore  // Prevents infinite recursion in JSON serialization
 	private List<Diary> diaries = new ArrayList<>();
 
-	// ✅ Auto-set timestamp before saving
+	//  Auto-set timestamp before saving
 	@PrePersist
 	protected void onCreate() {
 		this.createdAt = LocalDateTime.now();

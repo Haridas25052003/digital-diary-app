@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Login — Digital Diary</title>
+    <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+
+<nav class="navbar">
+    <a class="navbar-brand" href="index.html">📖 Digital<span>Diary</span></a>
+    <ul class="navbar-links" id="navLinks"></ul>
+</nav>
+
+<main class="auth-page">
+    <div class="auth-card">
+        <h2>Welcome Back</h2>
+        <p class="subtitle">Sign in to continue writing your story.</p>
+
+        <div id="alertMsg" class="alert"></div>
+
+        <form id="loginForm" novalidate>
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" placeholder="jane@email.com" required/>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="Your password" required/>
+            </div>
+            <button type="submit" class="btn btn-primary btn-full" id="submitBtn">
+                Sign In
+            </button>
+        </form>
+
+        <div class="auth-footer">
+            Don't have an account? <a href="register.html">Register here</a>
+        </div>
+    </div>
+</main>
+
+<script src="js/app.js"></script>
+<script>
+    redirectIfLoggedIn();
+
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById('submitBtn');
+
+      const email    = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value.trim();
+
+      if (!email || !password) {
+        return showAlert('alertMsg', 'Email and password are required.');
+      }
+
+      setLoading(btn, true);
+      try {
+        const user = await loginUser({ email, password });
+        setUser(user);
+        window.location.href = 'dashboard.html';
+      } catch (err) {
+        showAlert('alertMsg', err.message || 'Login failed. Please try again.');
+      } finally {
+        setLoading(btn, false);
+      }
+    });
+</script>
+</body>
+</html>
