@@ -20,7 +20,7 @@
         <a href="create-diary.html" class="btn btn-primary">+ New Entry</a>
     </div>
 
-    <!-- ─── Category Filter Bar ───────────────────────────────── -->
+    <!-- ─── Category Filter Bar ──────────────────────────────── -->
     <div class="filter-bar" id="filterBar" style="margin-bottom:1.5rem;">
         <button class="filter-btn active" data-category="all">All</button>
         <button class="filter-btn" data-category="Personal">Personal</button>
@@ -121,7 +121,7 @@
       return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
     }
 
-    // ─── Filter buttons ─────────────────────────────────────────
+    // ─── Filter buttons ────────────────────────────────────────
     document.getElementById('filterBar').addEventListener('click', (e) => {
       if (!e.target.classList.contains('filter-btn')) return;
       document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));

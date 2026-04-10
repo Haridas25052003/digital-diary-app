@@ -65,7 +65,7 @@
     window.location.href = 'view-diaries.html';
   }
 
-  // ─── Load existing diary data ─────────────────────────────────
+  // ─── Load existing diary data ──────────────────────────────
   async function loadDiary() {
     try {
       const diary = await getDiaryById(diaryId);
@@ -84,7 +84,7 @@
 
   loadDiary();
 
-  // ─── Submit updated diary ─────────────────────────────────────
+  // ─── Submit updated diary ──────────────────────────────────
   document.getElementById('editForm').addEventListener('submit', async (e) => {
     e.preventDefault();
     const btn = document.getElementById('submitBtn');
