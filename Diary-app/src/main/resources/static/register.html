@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Register — Digital Diary</title>
+    <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+
+<nav class="navbar">
+    <a class="navbar-brand" href="index.html">📖 Digital<span>Diary</span></a>
+    <ul class="navbar-links" id="navLinks"></ul>
+</nav>
+
+<main class="auth-page">
+    <div class="auth-card">
+        <h2>Create Account</h2>
+        <p class="subtitle">Join and start writing your first diary entry.</p>
+
+        <div id="alertMsg" class="alert"></div>
+
+        <form id="registerForm" novalidate>
+            <div class="form-group">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" placeholder="Jane Doe" required/>
+            </div>
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" placeholder="jane@email.com" required/>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="At least 4 characters" required/>
+            </div>
+            <button type="submit" class="btn btn-primary btn-full" id="submitBtn">
+                Create Account
+            </button>
+        </form>
+
+        <div class="auth-footer">
+            Already have an account? <a href="login.html">Sign in</a>
+        </div>
+    </div>
+</main>
+
+<script src="js/app.js"></script>
+<script>
+    // Redirect if already logged in
+    redirectIfLoggedIn();
+
+    document.getElementById('registerForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById('submitBtn');
+
+      const name     = document.getElementById('name').value.trim();
+      const email    = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value.trim();
+
+      // Basic client-side validation
+      if (!name || !email || !password) {
+        return showAlert('alertMsg', 'All fields are required.');
+      }
+      if (password.length < 4) {
+        return showAlert('alertMsg', 'Password must be at least 4 characters.');
+      }
+
+      setLoading(btn, true);
+      try {
+        await registerUser({ name, email, password });
+        showAlert('alertMsg', '🎉 Account created! Redirecting to login...', 'success');
+        setTimeout(() => window.location.href = 'login.html', 1800);
+      } catch (err) {
+        showAlert('alertMsg', err.message || 'Registration failed. Try again.');
+      } finally {
+        setLoading(btn, false);
+      }
+    });
+</script>
+</body>
+</html>

@@ -24,12 +24,12 @@ public class AuthController {
 
     private final UserService userService;
 
-    // ✅ Constructor Injection (no @Autowired needed on constructor)
+    // Constructor Injection (no @Autowired needed on constructor)
     public AuthController(UserService userService) {
         this.userService = userService;
     }
 
-    // ✅ REGISTER USER
+    // REGISTER USER
     @PostMapping
     public ResponseEntity<User> createUser(@Valid @RequestBody User user) {
         logger.info("Registering user with email: {}", user.getEmail());
@@ -44,14 +44,14 @@ public class AuthController {
         return ResponseEntity.status(HttpStatus.CREATED).body(savedUser);
     }
 
-    // ✅ GET ALL USERS
+    // GET ALL USERS
     @GetMapping
     public ResponseEntity<List<User>> getAllUsers() {
         logger.info("Fetching all users");
         return ResponseEntity.ok(userService.getAllUsers());
     }
 
-    // ✅ GET USER BY ID
+    // GET USER BY ID
     @GetMapping("/{id}")
     public ResponseEntity<User> getUserById(@PathVariable int id) {
         logger.info("Fetching user by ID: {}", id);
@@ -62,7 +62,7 @@ public class AuthController {
         return ResponseEntity.ok(user);
     }
 
-    // ✅ LOGIN — find user by email + validate password
+    // LOGIN — find user by email + validate password
     @PostMapping("/login")
     public ResponseEntity<User> login(@RequestBody User loginRequest) {
         logger.info("Login attempt for email: {}", loginRequest.getEmail());

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>New Entry — Digital Diary</title>
+    <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+
+<nav class="navbar">
+    <a class="navbar-brand" href="index.html">📖 Digital<span>Diary</span></a>
+    <ul class="navbar-links" id="navLinks"></ul>
+</nav>
+
+<div class="form-page">
+    <div class="form-card">
+        <h2>New Diary Entry</h2>
+        <p class="subtitle">Capture your thoughts, feelings, or ideas.</p>
+
+        <div id="alertMsg" class="alert"></div>
+
+        <form id="createForm" novalidate>
+            <div class="form-group">
+                <label for="title">Title</label>
+                <input type="text" id="title" placeholder="Give your entry a title..." required/>
+            </div>
+            <div class="form-group">
+                <label for="category">Category</label>
+                <select id="category">
+                    <option value="">— Select a category —</option>
+                    <option value="Personal">Personal</option>
+                    <option value="Work">Work</option>
+                    <option value="Travel">Travel</option>
+                    <option value="Health">Health</option>
+                    <option value="Learning">Learning</option>
+                    <option value="Gratitude">Gratitude</option>
+                    <option value="Goals">Goals</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="content">Content</label>
+                <textarea id="content" placeholder="Write your heart out..." required></textarea>
+            </div>
+            <div style="display:flex; gap:1rem;">
+                <button type="submit" class="btn btn-primary" id="submitBtn" style="flex:1">
+                    Save Entry
+                </button>
+                <a href="view-diaries.html" class="btn btn-outline">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="js/app.js"></script>
+<script>
+    requireAuth();
+    const user = getUser();
+
+    document.getElementById('createForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById('submitBtn');
+
+      const title    = document.getElementById('title').value.trim();
+      const content  = document.getElementById('content').value.trim();
+      const category = document.getElementById('category').value;
+
+      if (!title || !content) {
+        return showAlert('alertMsg', 'Title and content are required.');
+      }
+
+      setLoading(btn, true);
+      try {
+        await createDiary({ title, content, category, userId: user.id });
+        showAlert('alertMsg', '✅ Diary entry saved!', 'success');
+        setTimeout(() => window.location.href = 'view-diaries.html', 1400);
+      } catch (err) {
+        showAlert('alertMsg', err.message || 'Failed to save entry.');
+      } finally {
+        setLoading(btn, false);
+      }
+    });
+</script>
+</body>
+</html>
